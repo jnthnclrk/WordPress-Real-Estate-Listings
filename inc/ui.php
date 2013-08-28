@@ -7,12 +7,15 @@
 function rel_columns( $columns ) {
 	$columns = array(
 		'cb' => '<input type="checkbox" />',
+    	'title' => 'Title',
+    	'agent' => 'Agent',
 		'featured_image' => 'Image',
-    	'title' => 'Title/ Address',
+		"description" => "Description",
 		'price_sale' => 'Sale',
 		'price_long_term' => 'Long Term',
 		'price_short_term' => 'Short Term',
 		'price_time_share' => 'Time Share',
+		'bedrooms' => 'Bedrooms',
 		'comments' => '<span class="vers"><div title="Comments" class="comment-grey-bubble"></div></span>',
     	'state' => 'State',
     	'date' => 'Date'
@@ -27,6 +30,25 @@ add_filter('manage_listings_posts_columns' , 'rel_columns');
 
 function rel_custom_columns( $column, $post_id ) {
     switch ( $column ) {
+		case 'agent':
+			$rel_agents = get_the_terms( $post_id, 'agent' );
+			if ( !empty( $rel_agents ) ) {
+				$out = array();
+				foreach ( $rel_agents as $term ) {
+					$out[] = sprintf( '<a href="%s">%s</a>',
+						esc_url( add_query_arg( array( 'post_type' => 'listings', 'agent' => $term->term_id ), 'edit.php' ) ),
+						esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'agent', 'display' ) )
+					);
+				}
+				echo join( ', ', $out );
+			}
+			else {
+				echo 'No Agent';
+			}
+			break;
+		case "description":
+			the_excerpt();
+			break;
 		case 'price_sale':
 			echo get_post_meta( $post_id, 'rel_price_sale' , true ); 
 			break;
@@ -35,6 +57,12 @@ function rel_custom_columns( $column, $post_id ) {
 			break;
 		case 'price_short_term':
 			echo get_post_meta( $post_id, 'rel_price_short_term' , true ); 
+			break;
+		case 'price_time_share':
+			echo get_post_meta( $post_id, 'rel_price_time_share' , true ); 
+			break;
+		case 'bedrooms':
+			echo get_post_meta( $post_id, 'rel_bedrooms' , true ); 
 			break;
 		case 'featured_image':
 			echo the_post_thumbnail( array( 75,75 ) );
@@ -69,7 +97,8 @@ function rel_custom_sort( $columns ) {
 		'price_long_term' => 'Long Term',
 		'price_short_term' => 'Short Term',
 		'price_time_share' => 'Time Share',
-		'state' => 'State'
+		'state' => 'State',
+		'bedrooms' => 'Bedrooms'
 	);
 	return wp_parse_args($custom, $columns);
 }
@@ -160,4 +189,33 @@ function rel_post_limits( $groupby ) {
 }
 add_filter( 'posts_groupby', 'rel_post_limits' );
 
+/*
+ * Change default length of the_excerpt
+ */
+
+function rel_excerpt_length( $length ) {
+	return 10;
+}
+add_filter( 'excerpt_length', 'rel_excerpt_length', 999 );
+
+/*
+ * Add listings count to dashboard
+ *
+ * Lifted from http://wpsnipp.com/index.php/functions-php/include-custom-post-types-in-right-now-admin-dashboard-widget/
+ *
+ */
+
+function rel_right_now_content_table_end () {
+	$num_posts = wp_count_posts( 'listings' );
+	$num = number_format_i18n( $num_posts->publish );
+	$text = _n( 'Listing', 'Listings', intval( $num_posts->publish ) );
+	if ( current_user_can( 'edit_posts' ) ) {
+		$num = "<a href='edit.php?post_type=listings'>$num</a>";
+		$text = "<a href='edit.php?post_type=listings'>$text</a>";
+	}
+	echo '<tr><td class="first b b-listings">' . $num . '</td>';
+	echo '<td class="t listings">' . $text . '</td></tr>';
+
+}
+add_action( 'right_now_content_table_end' , 'rel_right_now_content_table_end' );
 ?>

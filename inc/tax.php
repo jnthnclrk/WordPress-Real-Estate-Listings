@@ -37,4 +37,42 @@ function register_taxonomy_state() {
     register_taxonomy( 'state', array('listings'), $args );
 }
 add_action( 'init', 'register_taxonomy_state' );
+
+/*
+ * Agent taxonomy
+ */
+
+function register_taxonomy_agent() {
+    $labels = array( 
+        'name' => _x( 'Agents', 'agent' ),
+        'singular_name' => _x( 'Agent', 'agent' ),
+        'search_items' => _x( 'Search Agents', 'agent' ),
+        'popular_items' => _x( 'Popular Agents', 'agent' ),
+        'all_items' => _x( 'All Agents', 'agent' ),
+        'parent_item' => _x( 'Parent Agent', 'agent' ),
+        'parent_item_colon' => _x( 'Parent Agent:', 'agent' ),
+        'edit_item' => _x( 'Edit Agent', 'agent' ),
+        'update_item' => _x( 'Update Agent', 'agent' ),
+        'add_new_item' => _x( 'Add New Agent', 'agent' ),
+        'new_item_name' => _x( 'New Agent', 'agent' ),
+        'separate_items_with_commas' => _x( 'Separate agents with commas', 'agent' ),
+        'add_or_remove_items' => _x( 'Add or remove Agents', 'agent' ),
+        'choose_from_most_used' => _x( 'Choose from most used Agents', 'agent' ),
+        'menu_name' => _x( 'Agent', 'agent' ),
+    );
+    $args = array( 
+        'labels' => $labels,
+        'public' => true,
+        'show_in_nav_menus' => true,
+        'show_ui' => true,
+        'show_tagcloud' => false,
+        'show_admin_column' => true,
+        'hierarchical' => false,
+
+        'rewrite' => true,
+        'query_var' => true
+    );
+    register_taxonomy( 'agent', array('listings'), $args );
+}
+add_action( 'init', 'register_taxonomy_agent' );
 ?>
