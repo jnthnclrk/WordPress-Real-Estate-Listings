@@ -11,7 +11,7 @@ require_once( dirname( __FILE__ ) . '/inc/tax.php' );
 
 if ( is_admin() ) {
 	require_once( dirname( __FILE__ ) . '/inc/meta.php' );
-	require_once( dirname( __FILE__ ) . '/inc/cols.php' );
+	require_once( dirname( __FILE__ ) . '/inc/ui.php' );
 } else {
 }
 

@@ -8,10 +8,7 @@ function rel_columns( $columns ) {
 	$columns = array(
 		'cb' => '<input type="checkbox" />',
 		'featured_image' => 'Image',
-    	'title' => 'Address',
-    	'post_status' => 'Post Status',
-    	'post_type' => 'Post Type',
-    	'post_parent' => 'Post Ancestors',
+    	'title' => 'Title/ Address',
 		'price_sale' => 'Sale',
 		'price_long_term' => 'Long Term',
 		'price_short_term' => 'Short Term',
@@ -30,15 +27,6 @@ add_filter('manage_listings_posts_columns' , 'rel_columns');
 
 function rel_custom_columns( $column, $post_id ) {
     switch ( $column ) {
-		case 'post_status':
-			echo get_post_status( $post_id );
-			break;
-		case 'post_type':
-			echo get_post_type( $post_id );
-			break;
-		case 'post_parent':
-			print_r ( get_post_ancestors( $post_id ) );
-			break;
 		case 'price_sale':
 			echo get_post_meta( $post_id, 'rel_price_sale' , true ); 
 			break;
@@ -49,7 +37,7 @@ function rel_custom_columns( $column, $post_id ) {
 			echo get_post_meta( $post_id, 'rel_price_short_term' , true ); 
 			break;
 		case 'featured_image':
-			echo the_post_thumbnail( 'thumbnail' );
+			echo the_post_thumbnail( array( 75,75 ) );
 			break;
 		case 'state':
 			$rel_states = get_the_terms( $post_id, 'state' );
