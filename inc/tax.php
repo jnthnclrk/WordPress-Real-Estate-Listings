@@ -1,78 +1,57 @@
 <?php
 
 /*
- * State taxonomy
+ * Register taxonomies
  */
 
-function register_taxonomy_state() {
-    $labels = array( 
-        'name' => _x( 'States', 'state' ),
-        'singular_name' => _x( 'State', 'state' ),
-        'search_items' => _x( 'Search States', 'state' ),
-        'popular_items' => _x( 'Popular States', 'state' ),
-        'all_items' => _x( 'All States', 'state' ),
-        'parent_item' => _x( 'Parent State', 'state' ),
-        'parent_item_colon' => _x( 'Parent State:', 'state' ),
-        'edit_item' => _x( 'Edit State', 'state' ),
-        'update_item' => _x( 'Update State', 'state' ),
-        'add_new_item' => _x( 'Add New State', 'state' ),
-        'new_item_name' => _x( 'New State', 'state' ),
-        'separate_items_with_commas' => _x( 'Separate states with commas', 'state' ),
-        'add_or_remove_items' => _x( 'Add or remove States', 'state' ),
-        'choose_from_most_used' => _x( 'Choose from most used States', 'state' ),
-        'menu_name' => _x( 'State', 'state' ),
-    );
-    $args = array( 
-        'labels' => $labels,
-        'public' => true,
-        'show_in_nav_menus' => true,
-        'show_ui' => true,
-        'show_tagcloud' => false,
-        'show_admin_column' => true,
-        'hierarchical' => false,
+class rel_taxonomy {
+	public function make ( $singular, $plural, $slug, $cpt) {
+		$labels = array( 
+			'name' => _x( $plural, $slug ),
+			'singular_name' => _x( "$singular", $slug ),
+			'search_items' => _x( "Search $plural", $slug ),
+			'popular_items' => _x( "Popular $plural", $slug ),
+			'all_items' => _x( "All $plural", $slug ),
+			'parent_item' => _x( "Parent $singular", $slug ),
+			'parent_item_colon' => _x( "Parent $singular:", $slug ),
+			'edit_item' => _x( "Edit $singular", $slug ),
+			'update_item' => _x( "Update $singular", $slug ),
+			'add_new_item' => _x( "Add New $singular", $slug ),
+			'new_item_name' => _x( "New $singular", $slug ),
+			'separate_items_with_commas' => _x( "Separate $plural with commas", $slug ),
+			'add_or_remove_items' => _x( "Add or remove $plural", $slug ),
+			'choose_from_most_used' => _x( "Choose from most used $plural", $slug ),
+			'menu_name' => _x( "$plural", $slug ),
+		);
+		$args = array( 
+			'labels' => $labels,
+			'public' => true,
+			'show_in_nav_menus' => true,
+			'show_ui' => true,
+			'show_tagcloud' => false,
+			'show_admin_column' => true,
+			'hierarchical' => false,
 
-        'rewrite' => true,
-        'query_var' => true
-    );
-    register_taxonomy( 'state', array('listings'), $args );
+			'rewrite' => true,
+			'query_var' => true
+		);
+		register_taxonomy( $slug, array( $cpt ), $args );
+	}
 }
-add_action( 'init', 'register_taxonomy_state' );
 
-/*
- * Agent taxonomy
- */
-
-function register_taxonomy_agent() {
-    $labels = array( 
-        'name' => _x( 'Agents', 'agent' ),
-        'singular_name' => _x( 'Agent', 'agent' ),
-        'search_items' => _x( 'Search Agents', 'agent' ),
-        'popular_items' => _x( 'Popular Agents', 'agent' ),
-        'all_items' => _x( 'All Agents', 'agent' ),
-        'parent_item' => _x( 'Parent Agent', 'agent' ),
-        'parent_item_colon' => _x( 'Parent Agent:', 'agent' ),
-        'edit_item' => _x( 'Edit Agent', 'agent' ),
-        'update_item' => _x( 'Update Agent', 'agent' ),
-        'add_new_item' => _x( 'Add New Agent', 'agent' ),
-        'new_item_name' => _x( 'New Agent', 'agent' ),
-        'separate_items_with_commas' => _x( 'Separate agents with commas', 'agent' ),
-        'add_or_remove_items' => _x( 'Add or remove Agents', 'agent' ),
-        'choose_from_most_used' => _x( 'Choose from most used Agents', 'agent' ),
-        'menu_name' => _x( 'Agent', 'agent' ),
-    );
-    $args = array( 
-        'labels' => $labels,
-        'public' => true,
-        'show_in_nav_menus' => true,
-        'show_ui' => true,
-        'show_tagcloud' => false,
-        'show_admin_column' => true,
-        'hierarchical' => false,
-
-        'rewrite' => true,
-        'query_var' => true
-    );
-    register_taxonomy( 'agent', array('listings'), $args );
+function rel_register_taxonomies () {
+    $rel_taxonomy = new rel_taxonomy ();
+    $rel_taxonomy -> make ( 'State', 'States', 'state', 'listings' );
+    $rel_taxonomy -> make ( 'Agent', 'Agents', 'agent', 'listings' );
+    $rel_taxonomy -> make ( 'Type', 'Types', 'type', 'listings' );
+    $rel_taxonomy -> make ( 'Offer', 'Offers', 'offer', 'listings' );
+    $rel_taxonomy -> make ( 'Development', 'Developments', 'development', 'listings' );
+    $rel_taxonomy -> make ( 'Feature', 'Features', 'feature', 'listings' );
+    $rel_taxonomy -> make ( 'Furnishing', 'Furnishings', 'furnishing', 'listings' );
+    $rel_taxonomy -> make ( 'Location', 'Locations', 'location', 'listings' );
+    $rel_taxonomy -> make ( 'Nearest popular beach', 'Nearest popular beaches', 'nearest-beach', 'listings' );
+    $rel_taxonomy -> make ( 'Neighbourhood', 'Neighbourhoods', 'neighbourhood', 'listings' );
 }
-add_action( 'init', 'register_taxonomy_agent' );
+add_action('init', 'rel_register_taxonomies');
+
 ?>

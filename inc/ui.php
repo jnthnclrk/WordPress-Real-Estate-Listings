@@ -98,6 +98,7 @@ function rel_custom_sort( $columns ) {
 		'price_short_term' => 'Short Term',
 		'price_time_share' => 'Time Share',
 		'state' => 'State',
+		'agent' => 'Agent',
 		'bedrooms' => 'Bedrooms'
 	);
 	return wp_parse_args($custom, $columns);
