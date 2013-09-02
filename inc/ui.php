@@ -16,6 +16,7 @@ function rel_columns( $columns ) {
 		'price_short_term' => 'Short Term',
 		'price_time_share' => 'Time Share',
 		'bedrooms' => 'Bedrooms',
+		'bathrooms' => 'Bathrooms',
 		'comments' => '<span class="vers"><div title="Comments" class="comment-grey-bubble"></div></span>',
     	'state' => 'State',
     	'date' => 'Date'
@@ -64,6 +65,9 @@ function rel_custom_columns( $column, $post_id ) {
 		case 'bedrooms':
 			echo get_post_meta( $post_id, 'rel_bedrooms' , true ); 
 			break;
+		case 'bathrooms':
+			echo get_post_meta( $post_id, 'rel_bathrooms' , true ); 
+			break;
 		case 'featured_image':
 			echo the_post_thumbnail( array( 75,75 ) );
 			break;
@@ -99,7 +103,8 @@ function rel_custom_sort( $columns ) {
 		'price_time_share' => 'Time Share',
 		'state' => 'State',
 		'agent' => 'Agent',
-		'bedrooms' => 'Bedrooms'
+		'bedrooms' => 'Bedrooms',
+		'bathrooms' => 'Bathrooms'
 	);
 	return wp_parse_args($custom, $columns);
 }
@@ -108,6 +113,7 @@ add_filter("manage_edit-listings_sortable_columns", 'rel_custom_sort');
 /*
  * Add taxonomy filter to list
  */
+
 // Filter the request to just give posts for the given taxonomy, if applicable.
 function taxonomy_filter_restrict_manage_posts() {
     global $typenow;
@@ -219,4 +225,5 @@ function rel_right_now_content_table_end () {
 
 }
 add_action( 'right_now_content_table_end' , 'rel_right_now_content_table_end' );
+
 ?>

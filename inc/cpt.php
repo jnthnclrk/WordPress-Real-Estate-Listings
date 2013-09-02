@@ -1,8 +1,10 @@
 <?php
-add_action( 'init', 'register_cpt_listings' );
 
-function register_cpt_listings() {
+/*
+ * Set up custom post type
+ */
 
+function rel_register_cpt_listings() {
     $labels = array( 
         'name' => _x( 'Listings', 'listings' ),
         'singular_name' => _x( 'Listing', 'listings' ),
@@ -17,7 +19,6 @@ function register_cpt_listings() {
         'parent_item_colon' => _x( 'Parent Listing:', 'listings' ),
         'menu_name' => _x( 'Listings', 'listings' ),
     );
-
     $args = array( 
         'labels' => $labels,
         'hierarchical' => false,
@@ -38,7 +39,8 @@ function register_cpt_listings() {
         'rewrite' => true,
         'capability_type' => 'post'
     );
-
     register_post_type( 'listings', $args );
 }
+add_action( 'init', 'rel_register_cpt_listings' );
+
 ?>
