@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: Real Estate Listings
+Plugin Name: WordPress Real Estate Listings
 Description: A Real Estate Listings plugin for WordPress
 Version: 0.1
-Author: hypedtext
+Author: lesslazy
 */
 
 require_once( dirname( __FILE__ ) . '/inc/cpt.php' );
