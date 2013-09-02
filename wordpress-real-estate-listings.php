@@ -14,3 +14,5 @@ if ( is_admin() ) {
 	require_once( dirname( __FILE__ ) . '/inc/meta.php' );
 	require_once( dirname( __FILE__ ) . '/inc/ui.php' );
 }
+
+?>
