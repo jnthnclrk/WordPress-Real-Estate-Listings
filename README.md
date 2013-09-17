@@ -29,3 +29,14 @@ An initial proof of concept plugin that builds a single custom post type called 
 * Improves WP Admin keyword seaches to include meta data
 * Adds some stats to the WP dashboard
 
+## Changelog
+~Current Version:0.2~
+
+### 0.2
+
+Plugin updater check
+
+### 0.1
+
+Initial release
+
