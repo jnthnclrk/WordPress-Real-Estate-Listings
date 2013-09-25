@@ -9,8 +9,8 @@ function rel_columns( $columns ) {
 		'cb' => '<input type="checkbox" />',
     	'title' => 'Title',
     	'agent' => 'Agent',
-		'featured_image' => 'Image',
-		"description" => "Description",
+		'image' => 'Image',
+		'description' => 'Description',
 		'price_sale' => 'Sale',
 		'price_long_term' => 'Long Term',
 		'price_short_term' => 'Short Term',
@@ -68,8 +68,8 @@ function rel_custom_columns( $column, $post_id ) {
 		case 'bathrooms':
 			echo get_post_meta( $post_id, 'rel_bathrooms' , true ); 
 			break;
-		case 'featured_image':
-			echo the_post_thumbnail( array( 75,75 ) );
+		case 'image':
+			echo get_the_post_thumbnail( $post_id, array( 75,75 ) );
 			break;
 		case 'state':
 			$rel_states = get_the_terms( $post_id, 'state' );
