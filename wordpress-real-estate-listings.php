@@ -16,7 +16,6 @@ if ( is_admin() ) {
 	require_once( dirname( __FILE__ ) . '/inc/updater.php' );
 
 	function github_plugin_updater() {
-		include_once 'updater.php';
 		define( 'WP_GITHUB_FORCE_UPDATE', true );
 		$config = array(
 			'slug' => plugin_basename( __FILE__ ),
@@ -29,7 +28,7 @@ if ( is_admin() ) {
 			'requires' => '3.6.1',
 			'tested' => '3.6.1',
 			'readme' => 'README.md',
-			'access_token' => '',
+			'access_token' => ''
 		);
 		new WP_GitHub_Updater( $config );
 	}
