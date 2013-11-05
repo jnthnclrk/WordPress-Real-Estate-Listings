@@ -47,6 +47,7 @@ function rel_register_taxonomies () {
     $rel_taxonomy -> make ( 'Offer', 'Offers', 'offer', 'listings' );
     $rel_taxonomy -> make ( 'Development', 'Developments', 'development', 'listings' );
     $rel_taxonomy -> make ( 'Feature', 'Features', 'features', 'listings' );
+    $rel_taxonomy -> make ( 'Amenities', 'Amenities', 'amenity', 'listings' );
     $rel_taxonomy -> make ( 'Furnishing', 'Furnishings', 'furnishings', 'listings' );
     $rel_taxonomy -> make ( 'Location', 'Locations', 'location', 'listings' );
     $rel_taxonomy -> make ( 'Nearest popular beach', 'Nearest popular beaches', 'nearest-beach', 'listings' );

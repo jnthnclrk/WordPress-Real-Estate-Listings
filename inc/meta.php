@@ -9,7 +9,7 @@ function rel_inner_custom_box( $post ) {
 	wp_nonce_field( plugin_basename( __FILE__ ), 'rel_nonce' );
 	// The actual fields for data entry
 	// Use get_post_meta to retrieve an existing value from the database and use the value for the form
-	echo '<div style="width: 250px; float: left; margin-right: 10px;><p class="sub"><strong>Pricing</strong></p><table><tbody>';
+	echo '<div style="width: 250px; float: left; margin: 10px 10px 0px 0px;><p class="sub"><strong>Pricing</strong></p><table><tbody>';
 	$rel_price_sale = get_post_meta( $post->ID, 'rel_price_sale', true );
 	echo '<tr><td><label for="rel_price_sale"><small>Sale:</small></label></td><td><input type="text" id="rel_price_sale" name="rel_price_sale" value="'.esc_attr( $rel_price_sale ).'" size="10"/> <small>USD</small></td></tr>';
 	$rel_price_long_term = get_post_meta( $post->ID, 'rel_price_long_term', true );
@@ -20,11 +20,20 @@ function rel_inner_custom_box( $post ) {
 	echo '<tr><td><label for="rel_price_time_share"><small>Time Share:</small></label></td><td><input type="text" id="rel_price_time_share" name="rel_price_time_share" value="'.esc_attr( $rel_price_time_share ).'" size="10"/> <small>USD</small></td></tr>';
 	echo '</tbody></table></div>';
 
-	echo '<div style="width: 250px; float: left; margin-right: 10px;><p class="sub"><strong>Features</strong></p><table><tbody>';
+	echo '<div style="width: 250px; float: left; margin: 20px 10px 0px 0px;><p class="sub"><strong>Features</strong></p><table><tbody>';
 	$rel_bedrooms = get_post_meta( $post->ID, 'rel_bedrooms', true );
 	echo '<tr><td><label for="rel_bedrooms"><small>Bedrooms:</small></label></td><td><input type="text" id="rel_bedrooms" name="rel_bedrooms" value="'.esc_attr( $rel_bedrooms ).'" size="10"/></td></tr>';
 	$rel_bathrooms = get_post_meta( $post->ID, 'rel_bathrooms', true );
 	echo '<tr><td><label for="rel_bathrooms"><small>Bathrooms:</small></label></td><td><input type="text" id="rel_bathrooms" name="rel_bathrooms" value="'.esc_attr( $rel_bathrooms ).'" size="10"/></td></tr>';
+	echo '</tbody></table></div>';
+
+	echo '<div style="width: 250px; float: left; margin: 20px 10px 0px 0px;><p class="sub"><strong>Specifications</strong></p><table><tbody>';
+	$rel_price_per_sq_ft = get_post_meta( $post->ID, 'rel_price_per_sq_ft', true );
+	echo '<tr><td><label for="rel_price_per_sq_ft"><small>$ Per Sq. Ft.:</small></label></td><td><input type="text" id="rel_price_per_sq_ft" name="rel_price_per_sq_ft" value="'.esc_attr( $rel_price_per_sq_ft ).'" size="10"/> <small>USD</small></td></tr>';
+	$rel_lot_size = get_post_meta( $post->ID, 'rel_lot_size', true );
+	echo '<tr><td><label for="rel_lot_size"><small>Lot Size:</small></label></td><td><input type="text" id="rel_lot_size" name="rel_lot_size" value="'.esc_attr( $rel_lot_size ).'" size="10"/> <small>Sq. Ft.</small></td></tr>';
+	$rel_covered_size = get_post_meta( $post->ID, 'rel_covered_size', true );
+	echo '<tr><td><label for="rel_covered_size"><small>Covered Size:</small></label></td><td><input type="text" id="rel_covered_size" name="rel_covered_size" value="'.esc_attr( $rel_covered_size ).'" size="10"/> <small>Sq. Ft.</small></td></tr>';
 	echo '</tbody></table></div>';
 
 	echo '<div style="clear: both;"></div>';
@@ -74,6 +83,9 @@ function rel_save_postdata( $post_id ) {
   $rel_price_time_share = sanitize_text_field( $_POST['rel_price_time_share'] );
   $rel_bedrooms = sanitize_text_field( $_POST['rel_bedrooms'] );
   $rel_bathrooms = sanitize_text_field( $_POST['rel_bathrooms'] );
+  $rel_price_per_sq_ft = sanitize_text_field( $_POST['rel_price_per_sq_ft'] );
+  $rel_lot_size = sanitize_text_field( $_POST['rel_lot_size'] );
+  $rel_covered_size = sanitize_text_field( $_POST['rel_covered_size'] );
 
   // Save
   add_post_meta( $post_ID, 'rel_price_sale', $rel_price_sale, true ) or update_post_meta( $post_ID, 'rel_price_sale', $rel_price_sale );
@@ -82,6 +94,9 @@ function rel_save_postdata( $post_id ) {
   add_post_meta( $post_ID, 'rel_price_time_share', $rel_price_time_share, true ) or update_post_meta( $post_ID, 'rel_price_time_share', $rel_price_time_share );
   add_post_meta( $post_ID, 'rel_bedrooms', $rel_bedrooms, true ) or update_post_meta( $post_ID, 'rel_bedrooms', $rel_bedrooms );
   add_post_meta( $post_ID, 'rel_bathrooms', $rel_bathrooms, true ) or update_post_meta( $post_ID, 'rel_bathrooms', $rel_bathrooms );
+  add_post_meta( $post_ID, 'rel_price_per_sq_ft', $rel_price_per_sq_ft, true ) or update_post_meta( $post_ID, 'rel_price_per_sq_ft', $rel_price_per_sq_ft );
+  add_post_meta( $post_ID, 'rel_lot_size', $rel_lot_size, true ) or update_post_meta( $post_ID, 'rel_lot_size', $rel_lot_size );
+  add_post_meta( $post_ID, 'rel_covered_size', $rel_covered_size, true ) or update_post_meta( $post_ID, 'rel_covered_size', $rel_covered_size );
 }
 add_action( 'save_post', 'rel_save_postdata' );
 
