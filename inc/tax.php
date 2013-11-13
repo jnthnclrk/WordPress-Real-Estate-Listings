@@ -41,6 +41,7 @@ class rel_taxonomy {
 
 function rel_register_taxonomies () {
     $rel_taxonomy = new rel_taxonomy ();
+    $rel_taxonomy -> make ( 'Email Campaign Segment', 'Email Campaign Segments', 'email-campaign-segment', 'email-campaign-segments' );
     $rel_taxonomy -> make ( 'State', 'States', 'state', 'listings' );
     $rel_taxonomy -> make ( 'Agent', 'Agents', 'agent', 'listings' );
     $rel_taxonomy -> make ( 'Type', 'Types', 'type', 'listings' );
