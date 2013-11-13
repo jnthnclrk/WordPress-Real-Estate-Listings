@@ -8,6 +8,7 @@ function rel_columns( $columns ) {
 	$columns = array(
 		'cb' => '<input type="checkbox" />',
     	'title' => 'Title',
+    	'email-campaign-segment' => 'Email Campaign Segments',
     	'agent' => 'Agent',
 		'image' => 'Image',
 		'description' => 'Description',
@@ -31,6 +32,22 @@ add_filter('manage_listings_posts_columns' , 'rel_columns');
 
 function rel_custom_columns( $column, $post_id ) {
     switch ( $column ) {
+		case 'email-campaign-segment':
+			$rel_email_campaign_segments = get_the_terms( $post_id, 'email-campaign-segment' );
+			if ( !empty( $rel_email_campaign_segments ) ) {
+				$out = array();
+				foreach ( $rel_email_campaign_segments as $term ) {
+					$out[] = sprintf( '<a href="%s">%s</a>',
+						esc_url( add_query_arg( array( 'post_type' => 'listings', 'email-campaign-segment' => $term->term_id ), 'edit.php' ) ),
+						esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'email-campaign-segment', 'display' ) )
+					);
+				}
+				echo join( ', ', $out );
+			}
+			else {
+				echo 'No Email Campaign Segments';
+			}
+			break;
 		case 'agent':
 			$rel_agents = get_the_terms( $post_id, 'agent' );
 			if ( !empty( $rel_agents ) ) {
@@ -102,6 +119,7 @@ function rel_custom_sort( $columns ) {
 		'price_short_term' => 'Short Term',
 		'price_time_share' => 'Time Share',
 		'state' => 'State',
+		'email-campaign-segment' => 'Email Campaign Segments',
 		'agent' => 'Agent',
 		'bedrooms' => 'Bedrooms',
 		'bathrooms' => 'Bathrooms'
