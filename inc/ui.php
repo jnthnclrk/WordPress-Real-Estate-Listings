@@ -206,7 +206,7 @@ add_filter( 'parse_query', 'taxonomy_filter_post_type_request' );
 
 function rel_search_join( $join ) {
 	global $pagenow, $wpdb;
-	if ( is_admin() && $pagenow == 'edit.php' && $_GET['post_type'] == 'listings' && isset( $_GET['s'] ) != '') {    
+	if ( is_admin() && $pagenow == 'edit.php' && isset( $_GET['post_type'] ) == 'listings' && isset( $_GET['s'] ) != '') {    
 		$join .= 'LEFT JOIN ' . $wpdb->postmeta . ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
 	}
 	return $join;
@@ -215,7 +215,7 @@ add_filter('posts_join', 'rel_search_join' );
 
 function rel_search_where( $where ) {
 	global $pagenow, $wpdb;
-	if ( is_admin() && $pagenow == 'edit.php' && $_GET['post_type']=='listings' && isset( $_GET['s'] ) != '' ) {
+	if ( is_admin() && $pagenow == 'edit.php' && isset( $_GET['post_type'] ) =='listings' && isset( $_GET['s'] ) != '' ) {
 		$where = preg_replace( "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/", "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
 	}
 	return $where;
@@ -224,7 +224,7 @@ add_filter( 'posts_where', 'rel_search_where' );
 
 function rel_post_limits( $groupby ) {
     global $pagenow, $wpdb;
-    if ( is_admin() && $pagenow == 'edit.php' && $_GET['post_type']=='listings' && isset( $_GET['s'] ) != '' ) {
+    if ( is_admin() && $pagenow == 'edit.php' && isset( $_GET['post_type'] ) =='listings' && isset( $_GET['s'] ) != '' ) {
         $groupby = "$wpdb->posts.ID";
     }
     return $groupby;
